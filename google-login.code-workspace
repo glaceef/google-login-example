@@ -1,0 +1,23 @@
+{
+  "folders": [
+    {
+      "name": "root",
+      "path": "."
+    },
+    {
+      "name": "api",
+      "path": "apps/api"
+    },
+    {
+      "name": "google-login",
+      "path": "apps/google-login"
+    },
+    {
+      "name": "infra",
+      "path": "infra"
+    },
+    {
+      "path": "../project_template"
+    }
+  ]
+}
