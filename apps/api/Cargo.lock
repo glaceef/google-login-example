@@ -68,6 +68,7 @@ dependencies = [
  "once_cell",
  "reqwest",
  "serde",
+ "serde_dynamo",
  "serde_json",
  "tokio",
  "tracing",
@@ -219,9 +220,9 @@ dependencies = [
 
 [[package]]
 name = "aws-sdk-dynamodb"
-version = "0.31.0"
+version = "0.30.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "cd27ebc52de709006bf0a6500c7d9bf3bfdcac3f1f0ffe05cf6a33a344c89cc5"
+checksum = "069e3c6f367a02ee0af86616b6bf9dcc4f1eab19e11b05d4b0f71da0c86fcd9d"
 dependencies = [
  "aws-credential-types",
  "aws-http",
@@ -1880,6 +1881,17 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "serde_dynamo"
+version = "4.2.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b93775e2f69f89cecc813eee64ed948ca803e7a517be4103b67eed98facbfebd"
+dependencies = [
+ "aws-sdk-dynamodb",
+ "base64 0.21.4",
+ "serde",
 ]
 
 [[package]]

@@ -14,5 +14,6 @@ const initStack = new InitStack(app, 'init-stack', {
 const apiStack = new ApiStack(app, 'api-stack', {
   stackName: `${PROJECT_NAME}-api-stack`,
   bucket: initStack.bucket,
+  table: initStack.table,
 });
 apiStack.addDependency(initStack);

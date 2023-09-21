@@ -1,3 +1,5 @@
+use crate::CONFIG;
+use aws_sdk_dynamodb::{types::AttributeValue, Client};
 use axum::{
     extract::Json as JsonArg,
     response::{IntoResponse, Json},
@@ -8,7 +10,7 @@ use serde_json::json;
 
 mod user_info;
 
-use user_info::execute as get_user_info;
+use user_info::{get as get_user_info, UserInfo};
 
 #[derive(Deserialize)]
 pub struct RequestBody {
@@ -42,9 +44,24 @@ pub async fn handler(JsonArg(request_body): JsonArg<RequestBody>) -> impl IntoRe
     let code = urlencoding::decode(&request_body.code).unwrap();
     let token = oauth.get_token(&code).await.unwrap();
 
-    let user_info: serde_json::Value = get_user_info(token.access_token()).await;
+    let user_info: UserInfo = get_user_info(token.access_token()).await;
+
+    let sdk_config = aws_config::load_from_env().await;
+    let client = Client::new(&sdk_config);
+
+    let output = client
+        .get_item()
+        .table_name(&CONFIG.table_name)
+        .key("user_id", AttributeValue::S(user_info.email.clone()))
+        .send()
+        .await
+        .unwrap();
+
+    if output.item.is_none() {
+        println!("user not found");
+    }
 
     Json(json!({
-        "user_info": user_info,
+        "user_id": user_info.email,
     }))
 }

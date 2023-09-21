@@ -2,7 +2,7 @@ use serde::Deserialize;
 
 #[derive(Deserialize)]
 pub struct Config {
-    pub users_table_name: String,
+    pub table_name: String,
 }
 
 impl Config {
