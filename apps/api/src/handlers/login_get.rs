@@ -1,4 +1,7 @@
-use axum::response::{IntoResponse, Json};
+use axum::{
+    http::header::SET_COOKIE,
+    response::{IntoResponse, Json},
+};
 use google_login::{Config, OAuth};
 use serde::Deserialize;
 use serde_json::json;
@@ -14,10 +17,13 @@ pub async fn handler() -> impl IntoResponse {
     let oauth = OAuth::new(config_json.web, "http://localhost:8080/").unwrap();
 
     let (state, authorize_url) = oauth.authorize_url();
-    // std::fs::write("session", state.to_base64()).unwrap();
-    println!("session code = {}", state.to_base64());
+    let session_code = state.to_base64();
+    dbg!(&session_code);
 
-    Json(json!({
+    let headers = [(SET_COOKIE, format!("token={session_code}"))];
+    let body = Json(json!({
         "url": authorize_url.to_string(),
-    }))
+    }));
+
+    (headers, body)
 }

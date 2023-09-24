@@ -19,6 +19,8 @@ aws-config = "0.56.1"
 aws-sdk-dynamodb = "0.30.0"
 axum = "0.6.20"
 axum-aws-lambda = "0.5.0"
+axum-extra = { version = "0.8.0", features = ["cookie"] }
+chrono = "0.4.31"
 config = "0.13.3"
 dotenv = "0.15.0"
 google-login = { path = "../google-login" }
