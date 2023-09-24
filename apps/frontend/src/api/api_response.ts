@@ -16,10 +16,3 @@ export class UrlResponse {
 export interface ApiDataResponse<T> extends ApiResponse {
   data: T;
 }
-
-export interface ApiDataListResponse<T> extends ApiResponse {
-  data:  {
-    items: T[],
-    count?: number
-  }
-}

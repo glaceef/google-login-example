@@ -1,1 +1,13 @@
-{"web":{"client_id":"685339407571-b30vj68e2sv3fqgmk80lujm9544vcses.apps.googleusercontent.com","project_id":"radiant-pen-399512","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs","client_secret":"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","redirect_uris":["http://localhost:8080/"]}}
+{
+  "web": {
+    "client_id": "12345-abcde67890.apps.googleusercontent.com",
+    "project_id": "radiant-pen-12345",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_secret": "xxx",
+    "redirect_uris": [
+      "https://example.com/"
+    ]
+  }
+}

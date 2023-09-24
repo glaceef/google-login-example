@@ -1,8 +1,7 @@
 import { Api } from '@/api/api';
-import { Campaign } from '@/models/campaign';
 import { UrlResponse } from './api_response';
-
-export interface Paging {offset?: number, limit?: number, withCountFlag: boolean}
+import { LoginForm } from './forms/login_form';
+import { instanceToPlain } from 'class-transformer';
 
 export class Client extends Api {
   constructor() {
@@ -10,21 +9,23 @@ export class Client extends Api {
   }
 
   async getLoginUrl() {
-    const result = await this.requestData({
+    const result = await this.requestRaw({
       method: 'get',
-      url: `/login`,
+      url: '/login',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
     }, UrlResponse);
 
     return result.url;
   }
 
-  async getCampaign(campaignUuid: string) {
-    const result = await this.requestData({
-      method: 'get',
-      url: `/v1/campaigns/${campaignUuid}`,
-    }, Campaign);
-
-    return result;
+  async completeLogin(form: LoginForm) {
+    await this.request({
+      method: 'post',
+      url: '/login',
+      data: instanceToPlain(form),
+    });
   }
 }
 

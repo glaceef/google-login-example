@@ -1,21 +1,30 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router';
 
 import HomePage from '@/pages/HomePage.vue';
+import LoginCallbackPage from '@/pages/LoginCallbackPage.vue';
+import LoginCompletePage from '@/pages/LoginCompletePage.vue';
 
 export const ROUTER_NAME = {
-  HomePage: 'home',
-
+  Home: 'home',
+  LoginCallback: 'callback',
+  LoginComplete: 'complete',
 };
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
-    redirect: ROUTER_NAME.HomePage,
+    name: ROUTER_NAME.Home,
+    component: HomePage,
   },
   {
-    path: `/${ROUTER_NAME.HomePage}`,
-    name: ROUTER_NAME.HomePage,
-    component: HomePage,
+    path: '/login/callback',
+    name: ROUTER_NAME.LoginCallback,
+    component: LoginCallbackPage,
+  },
+  {
+    path: '/login/complete',
+    name: ROUTER_NAME.LoginComplete,
+    component: LoginCompletePage,
   },
 ];
 

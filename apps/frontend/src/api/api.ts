@@ -1,7 +1,6 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ClassConstructor, plainToInstance  } from 'class-transformer';
-import * as convertKeys from 'convert-keys';
-import JSONBigint from 'json-bigint';
+import convertKeys from 'convert-keys';
 import pickBy from 'lodash/pickBy';
 import qs from 'qs';
 
@@ -9,7 +8,7 @@ import ApiError from '@/api/api_error';
 import { ApiDataResponse, ApiResponse } from '@/api/api_response';
 import { applyCasingFix } from '@/api/fix_casing';
 
-const API_ORIGIN = 'd2t22igidsgvxm.cloudfront.net';
+const API_ORIGIN = 'https://d2t22igidsgvxm.cloudfront.net';
 
 export abstract class Api {
   private readonly axios: AxiosInstance;
@@ -25,7 +24,6 @@ export abstract class Api {
       },
       baseURL: this.baseUrl,
       withCredentials: true,
-      transformResponse: data => JSONBigint.parse(data), // Tweet ID が桁落ちしないようにする
       paramsSerializer: (params) => {
         const newParams = convertKeys.toSnake(pickBy(params, Boolean));
 
@@ -50,6 +48,18 @@ export abstract class Api {
   /**
    * 1 つのデータを取得するリクエスト
    */
+  protected async requestRaw<T>(
+    config: AxiosRequestConfig,
+    clazz: ClassConstructor<T>, // class は予約語なので、慣例的に clazz にする
+  ): Promise<T> {
+    const response = await this.executeRequest<T>(config);
+
+    return plainToInstance(clazz, response.data);
+  }
+
+  /**
+   * 1 つのデータを取得するリクエスト
+   */
   protected async requestData<T>(
     config: AxiosRequestConfig,
     clazz: ClassConstructor<T>, // class は予約語なので、慣例的に clazz にする
@@ -60,21 +70,18 @@ export abstract class Api {
   }
 
   private async executeRequest<D>(config: AxiosRequestConfig) {
-    const response: AxiosResponse<D> = await this.axios
+    const response = await this.axios
       .request<D>(config)
-      .catch(error => error.response);
-
-    this.validateResponse(response);
+      .then(res => this.validateResponse(res));
 
     return response;
   }
 
   private validateResponse<D>(response: AxiosResponse<D>) {
-    if (response?.status === 200) {
-      return;
+    if (response.status !== 200) {
+      throw new ApiError(response);
     }
 
-    const data = response?.data as unknown as ApiResponse;
-    throw new ApiError(response, data);
+    return response;
   }
 }

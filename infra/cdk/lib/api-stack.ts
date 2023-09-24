@@ -8,6 +8,7 @@ import { Construct } from 'constructs';
 import { RustFunction, Settings } from 'rust.aws-cdk-lambda';
 import { makeResourceName } from './utils';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
+import { PolicyDocument, PolicyStatement, Role, ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 
 interface ApiStackProps extends cdk.StackProps {
   bucket: Bucket,
@@ -20,6 +21,28 @@ export class ApiStack extends cdk.Stack {
 
     const { bucket, table } = props;
 
+    const lambdaRole = new Role(this, 'LambdaRole', {
+      assumedBy: new ServicePrincipal('lambda.amazonaws.com'),
+      inlinePolicies: {
+        DynamoDB: new PolicyDocument({
+          statements: [
+            new PolicyStatement({
+              actions: ['dynamodb:*'],
+              resources: ['*'],
+            }),
+          ]
+        }),
+        CloudWatchLogs: new PolicyDocument({
+          statements: [
+            new PolicyStatement({
+              actions: ['logs:*'],
+              resources: ['*'],
+            }),
+          ]
+        }),
+      },
+    });
+
     Settings.WORKSPACE_DIR = '../../apps/api';
 
     let lambdaApi = new RustFunction(this, 'Api', {
@@ -28,15 +51,14 @@ export class ApiStack extends cdk.Stack {
       setupLogging: true,
       logRetention: RetentionDays.ONE_WEEK,
       environment: {
-        USERS_TABLE_NAME: table.tableName,
+        RUST_BACKTRACE: '1',
+        CALLBACK_URL: 'https://d2t22igidsgvxm.cloudfront.net/login/callback',
+        TABLE_NAME: table.tableName,
       },
+      role: lambdaRole,
     });
     let lambdaFunctionUrl = lambdaApi.addFunctionUrl({
       authType: FunctionUrlAuthType.NONE,
-      // cors: {
-      //   allowedOrigins: ['http://localhost:8080'],
-      //   allowedMethods: [HttpMethod.GET],
-      // },
     });
     let apiOriginUrl = cdk.Fn.select(2, cdk.Fn.split('/', lambdaFunctionUrl.url));
 
