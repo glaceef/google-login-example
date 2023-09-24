@@ -19,9 +19,24 @@
     {
       "name": "infra",
       "path": "infra"
-    },
-    {
-      "path": "../vite-example"
     }
-  ]
+  ],
+  "settings": {
+    "editor.comments.insertSpace": true,
+    "editor.comments.ignoreEmptyLines": true,
+    "files.trimFinalNewlines": true,
+    "files.trimTrailingWhitespace": true,
+    "prettier.singleQuote": true,
+    "[rust]": {
+      "editor.tabSize": 4
+    },
+    "[typescript]": {
+      "editor.tabSize": 2,
+      "editor.defaultFormatter": "rvest.vs-code-prettier-eslint"
+    },
+    "[vue]": {
+      "editor.tabSize": 2,
+      "editor.defaultFormatter": "Vue.volar"
+    }
+  }
 }
