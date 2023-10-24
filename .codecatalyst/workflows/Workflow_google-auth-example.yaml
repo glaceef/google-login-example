@@ -22,7 +22,7 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: echo "Hello, World!"
-        - Run: ls
+        - Run: printenv
         - Run: aws s3 ls
         - Run: mkdir reports
         - Run: echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" >> reports/report.xml
