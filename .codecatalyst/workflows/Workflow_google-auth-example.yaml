@@ -11,8 +11,12 @@ Actions:
       Sources:
         - WorkflowSource # This specifies that the action requires this Workflow as a source
       Variables:
-        - Name: MyVariable
-          Value: ${Secrets.AWS_DEFAULT_REGION}
+        - Name: AWS_ACCESS_KEY_ID
+          Value: ${Secrets.AWS_ACCESS_KEY_ID}
+        - Name: AWS_SECRET_ACCESS_KEY
+          Value: ${Secrets.AWS_SECRET_ACCESS_KEY}
+        - Name: AWS_REGION
+          Value: us-east-1
     Outputs:
       # Optional; Automatically discover reports for popular test frameworks
       AutoDiscoverReports:
