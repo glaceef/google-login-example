@@ -23,10 +23,13 @@ Actions:
       Steps:
         - Run: echo "Hello, World!"
         - Run: ls
-        - Run: echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" >> report.xml
-        - Run: echo "<testsuite tests=\"1\" name=\"TestAgentJunit\" >" >> report.xml
+        - Run: aws s3 ls
+        - Run: mkdir reports
+        - Run: echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" >> reports/report.xml
+        - Run: echo "<testsuite tests=\"1\" name=\"TestAgentJunit\" >" >>
+            reports/report.xml
         - Run: echo "<testcase classname=\"TestAgentJunit\" name=\"Dummy
-            Test\"/></testsuite>" >> report.xml
+            Test\"/></testsuite>" >> reports/report.xml
     Compute:
       Type: Lambda
       Fleet: Linux.x86-64.Large
