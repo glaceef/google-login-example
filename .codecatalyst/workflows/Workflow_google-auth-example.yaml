@@ -16,12 +16,13 @@ Actions:
         Enabled: true
         ReportNamePrefix: rpt
         IncludePaths:
-          - report.xml
+          - reports/*.xml
     # Defines the action's properties.
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: echo "Hello, World!"
+        - Run: ls
         - Run: echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" >> report.xml
         - Run: echo "<testsuite tests=\"1\" name=\"TestAgentJunit\" >" >> report.xml
         - Run: echo "<testcase classname=\"TestAgentJunit\" name=\"Dummy
@@ -29,9 +30,3 @@ Actions:
     Compute:
       Type: Lambda
       Fleet: Linux.x86-64.Large
-
-# Optional - Set automatic triggers.
-# Triggers:
-#   - Type: PUSH
-#     Branches:
-#       - main
