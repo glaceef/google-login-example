@@ -10,6 +10,9 @@ Actions:
       # Optional
       Sources:
         - WorkflowSource # This specifies that the action requires this Workflow as a source
+      Variables:
+        - Name: MyVariable
+          Value: ${Secrets.AWS_DEFAULT_REGION}
     Outputs:
       # Optional; Automatically discover reports for popular test frameworks
       AutoDiscoverReports:
@@ -22,6 +25,7 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: echo "Hello, World!"
+        - Run: echo $AWS_DEFAULT_REGION
         - Run: printenv
         - Run: aws s3 ls
         - Run: mkdir reports
