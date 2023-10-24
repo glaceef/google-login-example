@@ -16,7 +16,7 @@ Actions:
         Enabled: true
         ReportNamePrefix: rpt
         IncludePaths:
-          - output/report.xml
+          - report.xml
     # Defines the action's properties.
     Configuration:
       # Required - Steps are sequential instructions that run shell commands
