@@ -37,3 +37,8 @@ Actions:
     Compute:
       Type: Lambda
       Fleet: Linux.x86-64.Large
+    Environment:
+      Connections:
+        - Role: CodeCatalystWorkflowDevelopmentRole-glaceef7322
+          Name: "437307506719"
+      Name: staging
