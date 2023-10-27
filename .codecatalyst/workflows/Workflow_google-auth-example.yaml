@@ -25,8 +25,7 @@ Actions:
       # Required - Steps are sequential instructions that run shell commands
       Steps:
         - Run: echo "Hello, World!"
-        - Run: echo $AWS_DEFAULT_REGION
-        - Run: printenv
+        - Run: echo $MY_ENV
         - Run: aws s3 ls
         - Run: mkdir reports
         - Run: echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" >> reports/report.xml
@@ -34,8 +33,11 @@ Actions:
             reports/report.xml
         - Run: echo "<testcase classname=\"TestAgentJunit\" name=\"Dummy
             Test\"/></testsuite>" >> reports/report.xml
+      Container:
+        Registry: ECR
+        Image: 437307506719.dkr.ecr.us-east-1.amazonaws.com/google-login-example:20231027
     Compute:
-      Type: Lambda
+      Type: EC2
       Fleet: Linux.x86-64.Large
     Environment:
       Connections:
