@@ -35,7 +35,7 @@ Actions:
             Test\"/></testsuite>" >> reports/report.xml
       Container:
         Registry: DockerHub
-        Image: alpine:3.18.4
+        Image: alpine/git:2.40.1
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
