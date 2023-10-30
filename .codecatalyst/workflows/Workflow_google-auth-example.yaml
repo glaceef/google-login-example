@@ -27,6 +27,7 @@ Actions:
         - Run: echo "Hello, World!"
         - Run: echo $MY_ENV
         - Run: aws s3 ls
+        - Run: docker --version
         - Run: mkdir reports
         - Run: echo "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>" >> reports/report.xml
         - Run: echo "<testsuite tests=\"1\" name=\"TestAgentJunit\" >" >>
@@ -35,7 +36,7 @@ Actions:
             Test\"/></testsuite>" >> reports/report.xml
       Container:
         Registry: ECR
-        Image: 437307506719.dkr.ecr.us-east-2.amazonaws.com/google-login-example:20231030
+        Image: 437307506719.dkr.ecr.us-west-2.amazonaws.com/google-login-example:20231030
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
