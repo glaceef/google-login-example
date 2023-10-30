@@ -35,7 +35,7 @@ Actions:
             Test\"/></testsuite>" >> reports/report.xml
       Container:
         Registry: ECR
-        Image: public.ecr.aws/m5r7q6m6/google-login-example:20231030
+        Image: 437307506719.dkr.ecr.us-east-1.amazonaws.com/google-login-example:20231027
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
