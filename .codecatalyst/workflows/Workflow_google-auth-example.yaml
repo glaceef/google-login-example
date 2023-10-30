@@ -34,8 +34,8 @@ Actions:
         - Run: echo "<testcase classname=\"TestAgentJunit\" name=\"Dummy
             Test\"/></testsuite>" >> reports/report.xml
       Container:
-        Registry: ECR
-        Image: 437307506719.dkr.ecr.us-east-1.amazonaws.com/google-login-example:20231027
+        Registry: DockerHub
+        Image: alpine:3.18.4
     Compute:
       Type: EC2
       Fleet: Linux.x86-64.Large
